@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/img/argentBankLogo.png";
 import "./NavbarComponent.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const NavbarComponent = () => {
   return (
@@ -14,12 +16,10 @@ const NavbarComponent = () => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      <div>
-        <Link className="main-nav-item" to="/sign-in">
-          <i className="fa fa-user-circle"></i>
-          Sign In
-        </Link>
-      </div>
+      <Link className="main-nav-item" to="/sign-in">
+        <FontAwesomeIcon icon={faUserCircle} className="icon" />
+        Sign In
+      </Link>
     </nav>
   );
 };
