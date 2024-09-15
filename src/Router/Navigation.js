@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeScreen from "../screens/Home/HomeScreen";
-import SignInScreen from "../screens/SignIn/SignIn";
+import SignInScreen from "../screens/SignIn/SignInScreen";
 
 const Navigation = () => {
   return (
