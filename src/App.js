@@ -1,5 +1,7 @@
+import NavbarComponent from "./components/Navbar/NavbarComponent";
+
 const App = () => {
-  return <h1>Argent bank</h1>;
+  return <NavbarComponent />;
 };
 
 export default App;
