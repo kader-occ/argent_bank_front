@@ -2,6 +2,7 @@ import React from "react";
 import NavbarComponent from "../../components/Navbar/NavbarComponent";
 import "./ProfileScreen.css";
 import { useSelector } from "react-redux";
+import FooterComponent from "../../components/Footer/FooterComponent";
 
 const ProfileScreen = () => {
   const { profile } = useSelector((state) => state.user);
@@ -54,6 +55,7 @@ const ProfileScreen = () => {
       ) : (
         <h1>Loading...</h1>
       )}
+      <FooterComponent />
     </>
   );
 };
