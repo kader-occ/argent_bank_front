@@ -10,12 +10,8 @@ const NavbarComponent = () => {
   const isAuthenticated = UserService.isAuthenticated();
 
   const handleLogout = () => {
-    console.log("Logout...");
-
-    /*
     UserService.logout();
     window.location = "/";
-    */
   };
 
   return (
