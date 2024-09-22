@@ -4,13 +4,15 @@ import logo from "../../assets/img/argentBankLogo.png";
 import "./NavbarComponent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import UserService from "../../services/UserService";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/reducers/UserReducer";
 
-const NavbarComponent = (profile) => {
-  const isAuthenticated = UserService.isAuthenticated();
+const NavbarComponent = () => {
+  const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.user);
 
   const handleLogout = () => {
-    UserService.logout();
+    dispatch(logout());
     window.location = "/";
   };
 
@@ -24,11 +26,11 @@ const NavbarComponent = (profile) => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      {isAuthenticated ? (
+      {profile ? (
         <div>
           <Link className="main-nav-item" to="/profile">
             <FontAwesomeIcon icon={faUserCircle} className="icon" />
-            {profile.profile.firstName}
+            {profile.firstName}
           </Link>
           <Link className="main-nav-item" onClick={handleLogout}>
             <FontAwesomeIcon icon={faUserCircle} className="icon" />

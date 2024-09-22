@@ -4,23 +4,24 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import "./LoginScreen.css";
 import NavbarComponent from "../../components/Navbar/NavbarComponent";
 import FooterComponent from "../../components/Footer/FooterComponent";
-import UserService from "../../services/UserService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/UserAction";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await UserService.login(email, password);
+      await dispatch(login(email, password));
       navigate("/profile");
     } catch (err) {
-      console.log(err.message || "Login error. Please check your credentials.");
+      console.log(err.message || "Login error");
     }
   };
 

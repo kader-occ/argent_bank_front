@@ -2,11 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import Navigation from "./Router/Navigation";
+import Navigation from "./router/Navigation";
+import store from "./redux/Store";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Navigation>
-    <App />
-  </Navigation>
+  <Provider store={store}>
+    <Navigation>
+      <App />
+    </Navigation>
+  </Provider>
 );
