@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import UserService from "../../services/UserService";
 
-const NavbarComponent = () => {
+const NavbarComponent = (profile) => {
   const isAuthenticated = UserService.isAuthenticated();
 
   const handleLogout = () => {
@@ -25,18 +25,18 @@ const NavbarComponent = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       {isAuthenticated ? (
-        <>
+        <div>
           <Link className="main-nav-item" to="/profile">
             <FontAwesomeIcon icon={faUserCircle} className="icon" />
-            My Profile
+            {profile.profile.firstName}
           </Link>
           <Link className="main-nav-item" onClick={handleLogout}>
             <FontAwesomeIcon icon={faUserCircle} className="icon" />
             Sign out
           </Link>
-        </>
+        </div>
       ) : (
-        <Link className="main-nav-item" to="/sign-in">
+        <Link className="main-nav-item" to="/login">
           <FontAwesomeIcon icon={faUserCircle} className="icon" />
           Sign In
         </Link>

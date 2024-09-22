@@ -1,12 +1,3 @@
-.bg-dark {
-  background-color: #12002b;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .sign-in-content {
   background-color: white;
   padding: 2rem;

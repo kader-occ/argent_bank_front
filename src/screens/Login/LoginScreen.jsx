@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import "./SignInScreen.css";
+import "./LoginScreen.css";
 import NavbarComponent from "../../components/Navbar/NavbarComponent";
 import FooterComponent from "../../components/Footer/FooterComponent";
 import UserService from "../../services/UserService";
 import { useNavigate } from "react-router-dom";
 
-const SignInScreen = () => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,8 +19,8 @@ const SignInScreen = () => {
     try {
       await UserService.login(email, password);
       navigate("/profile");
-    } catch (error) {
-      setError(error.message || "Login error. Please check your credentials.");
+    } catch (err) {
+      console.log(err.message || "Login error. Please check your credentials.");
     }
   };
 
@@ -73,4 +72,4 @@ const SignInScreen = () => {
   );
 };
 
-export default SignInScreen;
+export default LoginScreen;
