@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import NavbarComponent from "../../components/Navbar/NavbarComponent";
 import "./ProfileScreen.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FooterComponent from "../../components/Footer/FooterComponent";
+import { updateUserProfile } from "../../redux/actions/UserAction";
 
 const ProfileScreen = () => {
-  const { profile } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { token, profile } = useSelector((state) => state.user);
+  const [firstName, setFirstName] = useState(profile?.firstName || "");
+  const [lastName, setLastName] = useState(profile?.lastName || "");
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleSave = () => {
+    dispatch(updateUserProfile(firstName, lastName, token));
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
 
   return (
     <>
@@ -13,12 +27,35 @@ const ProfileScreen = () => {
       {profile ? (
         <main className="main bg-dark">
           <div className="header">
-            <h1>
-              Welcome back
-              <br />
-              {profile.firstName} {profile.lastName}!
-            </h1>
-            <button className="edit-button">Edit Name</button>
+            <h1>Welcome back</h1>
+            <br />
+            {isEditing ? (
+              <>
+                <div className="edit-name-form">
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                  <div className="edit-buttons">
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <h2>
+                {profile.firstName} {profile.lastName}
+              </h2>
+            )}
+            <button className="edit-button" onClick={() => setIsEditing(true)}>
+              Edit Name
+            </button>
           </div>
           <h2 className="sr-only">Accounts</h2>
           <section className="account">

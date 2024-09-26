@@ -20,9 +20,13 @@ const userSlice = createSlice({
     setUserProfile: (state, action) => {
       state.profile = action.payload;
     },
+    updateProfileSuccess: (state, action) => {
+      state.profile = { ...state.profile, ...action.payload };
+    },
   },
 });
 
-export const { loginSuccess, logout, setUserProfile } = userSlice.actions;
+export const { loginSuccess, logout, setUserProfile, updateProfileSuccess } =
+  userSlice.actions;
 
 export default userSlice.reducer;
