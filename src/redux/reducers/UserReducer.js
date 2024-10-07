@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    token: null, // Pour stocker le token JWT
-    profile: null, // Pour stocker les données du profil utilisateur
-    isAuthenticated: false, // Vérifier si l'utilisateur est connecté
+    token: null,
+    profile: null,
+    isAuthenticated: false,
   },
   reducers: {
     loginSuccess: (state, action) => {
@@ -20,13 +20,13 @@ const userSlice = createSlice({
     setUserProfile: (state, action) => {
       state.profile = action.payload;
     },
-    updateProfileSuccess: (state, action) => {
-      state.profile = { ...state.profile, ...action.payload };
+    updateProfile: (state, action) => {
+      state.profile = action.payload;
     },
   },
 });
 
-export const { loginSuccess, logout, setUserProfile, updateProfileSuccess } =
+export const { loginSuccess, logout, setUserProfile, updateProfile } =
   userSlice.actions;
 
 export default userSlice.reducer;

@@ -3,7 +3,7 @@ import {
   loginSuccess,
   logout,
   setUserProfile,
-  updateProfileSuccess,
+  updateProfile,
 } from "../reducers/UserReducer";
 
 const API_URL = "http://localhost:3001/api/v1/user";
@@ -55,24 +55,22 @@ export const fetchUserProfile = (token) => async (dispatch) => {
  * Update user profile
  * @param {string} firstName
  * @param {string} lastName
- * @param {string} token
  * @returns {function}
  */
 export const updateUserProfile =
-  (firstName, lastName, token) => async (dispatch) => {
+  (updatedProfile) => async (dispatch, getState) => {
+    const token = getState().user.token;
+    console.log(updatedProfile, token);
+
     try {
-      await axios.put(
-        `${API_URL}/profile`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      dispatch(updateProfileSuccess({ firstName, lastName }));
+      const { data } = await axios.put(`${API_URL}/profile`, updatedProfile, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(updateProfile(data.body));
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Erreur lors de la mise à jour du profil :", error);
     }
   };
 

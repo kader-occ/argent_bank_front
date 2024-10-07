@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarComponent from "../../components/Navbar/NavbarComponent";
 import "./ProfileScreen.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,28 +7,37 @@ import { updateUserProfile } from "../../redux/actions/UserAction";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
-  const { token, profile } = useSelector((state) => state.user);
-  const [firstName, setFirstName] = useState(profile?.firstName || "");
-  const [lastName, setLastName] = useState(profile?.lastName || "");
+  const user = useSelector((state) => state.user);
+  const [firstName, setFirstName] = useState(user.profile?.firstName || "");
+  const [lastName, setLastName] = useState(user.profile?.lastName || "");
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSave = () => {
-    dispatch(updateUserProfile(firstName, lastName, token));
+  useEffect(() => {
+    if (user.profile) {
+      setFirstName(user.profile.firstName);
+      setLastName(user.profile.lastName);
+    }
+  }, [user.profile]);
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    dispatch(updateUserProfile({ firstName, lastName }));
     setIsEditing(false);
   };
 
   const handleCancel = () => {
+    setFirstName(user.profile.firstName);
+    setLastName(user.profile.lastName);
     setIsEditing(false);
   };
 
   return (
     <>
       <NavbarComponent />
-      {profile ? (
+      {user.profile ? (
         <main className="main bg-dark">
           <div className="header">
             <h1>Welcome back</h1>
-            <br />
             {isEditing ? (
               <>
                 <div className="edit-name-form">
@@ -36,26 +45,33 @@ const ProfileScreen = () => {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First Name"
                   />
                   <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last Name"
                   />
-                  <div className="edit-buttons">
-                    <button onClick={handleSave}>Save</button>
-                    <button onClick={handleCancel}>Cancel</button>
-                  </div>
+                </div>
+                <div className="edit-buttons">
+                  <button onClick={handleSubmit}>Save</button>
+                  <button onClick={handleCancel}>Cancel</button>
                 </div>
               </>
             ) : (
-              <h2>
-                {profile.firstName} {profile.lastName}
-              </h2>
+              <>
+                <h2>
+                  {user.profile.firstName} {user.profile.lastName}
+                </h2>
+                <button
+                  className="edit-button"
+                  onClick={() => setIsEditing(true)}
+                >
+                  Edit Name
+                </button>
+              </>
             )}
-            <button className="edit-button" onClick={() => setIsEditing(true)}>
-              Edit Name
-            </button>
           </div>
           <h2 className="sr-only">Accounts</h2>
           <section className="account">
